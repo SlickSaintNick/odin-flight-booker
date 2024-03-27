@@ -9,17 +9,18 @@
   - has_many :departing_flights
   - has_many :arriving_flights
   - code (SYD, MEL, BNE, PER, ADL, CBR, OOL)
+  - name (Sydney, Melbourne, etc.)
 - Flight
-  - belongs_to :airport
   - departure_airport id
   - arrival_airport id
   - Start datetime
-  - Duration
-  - Number of passengers (1-4)
+  - Duration - integer (minutes)
 - Booking
   - passenger_id
   - flight_id
+  - Number of passengers (1-4) - integer
 - Passenger
+  - has_many :bookings
   - name
   - email
 
@@ -31,7 +32,7 @@ Steps
   - Create Flight model.
   - Set up associations between Airport / Flight
   - Seed flights
-  - FlightsController and routes.
+  - Flights Controller and routes.
   - Search form on /flights index page. Submit using GET to same URL.
   - Add 4 dropdown menus - departure airports, arrival airports, number of passengers, date (only include dates with flights)
 
