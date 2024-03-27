@@ -1,5 +1,17 @@
 <h1>Flight Booking</h1>
 
-<%= form_tag(flights_path, method: :get) do %>
-  <%= submit_tag "Search" %>
+<%= form_with url: root_path, method: :get do |form|%>
+  <%# p "params = #{params}" %>
+  <%# p "departure_airport_id = #{params[:departure_airport_id].to_i}" %>
+  <%= form.label :departure_airport_id %>
+  <%= form.select :departure_airport_id, options_for_select(@airports, selected: params[:departure_airport_id] || 0, disabled: 0 ) %></br>
+  <%= form.label :arrival_airport_id %>
+  <%= form.select :arrival_airport_id, options_for_select(@airports, selected: params[:arrival_airport_id] || 0, disabled: 0 ) %></br>
+  <% if @dates %>
+    <%= form.label :passengers %>
+    <%= form.select :passengers, 1..4 %></br>
+    <%= form.label :date %>
+    <%= form.select :date, options_for_select(@dates) %></br>
+  <% end %>
+  <%= form.submit "Search" %>
 <% end %>
