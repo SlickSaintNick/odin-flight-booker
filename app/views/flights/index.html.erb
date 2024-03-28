@@ -17,7 +17,7 @@
   <%= form.submit "Search" %>
 <% end %>
 
-<% if @flights_for_date.any? %>
+<% if @flights_for_date %>
   <h2>Flight options:</h2>
   <%= form_with url: "/bookings/new", method: :get do |form| %>
     <% @flights_for_date.each do |flight| %>
