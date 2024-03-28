@@ -10,17 +10,26 @@
   <%= form.select :arrival_airport_id, options_for_select(@airports, selected: params[:arrival_airport_id] || 0, disabled: 0 ) %></br>
   <% if @dates %>
     <%= form.label :passengers %>
-    <%= form.select :passengers, 1..4 %></br>
+    <%= form.select :passengers, 1..4, selected: params[:passengers] %></br>
     <%= form.label :date %>
-    <%= form.select :date, options_for_select(@dates) %></br>
+    <%= form.select :date, options_for_select(@dates, selected: params[:date]) %></br>
   <% end %>
   <%= form.submit "Search" %>
 <% end %>
 
-<% if @flights_for_date %>
+<% if @flights_for_date.any? %>
   <h2>Flight options:</h2>
-  <%= form_with url: "/bookings/new", method: :post do |form| %>
-    <%= p @flights_for_date %>
-    <%= form.collection_radio_buttons :flight, :id, @flights_for_date, :id %>
+  <%= form_with url: "/bookings/new", method: :get do |form| %>
+    <% @flights_for_date.each do |flight| %>
+      <%= form.radio_button :flight_id, flight.id, id:flight.id %>
+      <%= form.label flight.id.to_s, 
+            "Departure: #{flight.departure_airport.code} #{flight.start.strftime("%I:%M %p")} 
+             Arrival: #{flight.arrival_airport.code} #{(flight.start + flight.duration.minutes).strftime("%I:%M %p")}"
+        %>
+      <br>
+    <% end %>
+    <%= form.hidden_field :passengers, value: params[:passengers] %>
+    <br>
+    <%= form.submit "Select flight" %>
   <% end %>
 <% end %>

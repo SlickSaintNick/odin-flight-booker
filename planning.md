@@ -39,13 +39,13 @@ Steps
 - Screen 2: pick a flight
   - Controller pulls flights matching criteria
   - Send these back to index, should display any results below search.
-  - Search results in own form - for selecting a flight. Radio button next to each. Submit to #new action of BookingsController. Hidden field with number of passengers.
+  - Search results in own form - for selecting a flight. Radio button next to each. Submit to #new action of Bookings Controller. Hidden field with number of passengers.
 
 - Screen 3: passenger information
   - Create Booking model
   - Passenger model
   - Associations Bookings, Passengers, Flights
-  - Bookings Controller
+  - **Bookings Controller**
   - #new - render a form for a new booking showing date, airports, flight ID, personal information. Create a blank Passenger object in controller, use #fields_for to set up sub-forms.
   - #create action to create a new Booking (nested attributed and parameters)
   - #show page for Booking - flight and passenger information.
