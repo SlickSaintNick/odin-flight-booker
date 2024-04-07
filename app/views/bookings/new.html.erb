@@ -11,16 +11,39 @@
   <h3>Arrival:</h3>
   <%= "#{@flight.arrival_airport.name} (#{@flight.arrival_airport.code}): #{(@flight.start + @flight.duration.minutes).strftime("%I:%M %p")}" %>
   <h3>Passengers:</h3>
-  <ul>
-    <%= form.fields_for :passengers do |passengers_form| %>
-      <li>
-        <%= passengers_form.label :name %>
-        <%= passengers_form.text_field :name %>
+  <div data-controller="passengers">
+    <ul data-passengers-target="list">
+      <%= form.fields_for :passengers do |passengers_form| %>
+        <li data-passengers-target="passenger">
+          <%= passengers_form.label :name %>
+          <%= passengers_form.text_field :name %>
 
-        <%= passengers_form.label :email %>
-        <%= passengers_form.text_field :email %>
-      </li>
-    <% end %>
-  </ul>
+          <%= passengers_form.label :email %>
+          <%= passengers_form.text_field :email %>
+          <a data-action="passengers#remove">Remove</a>
+        </li>
+      <% end %>
+    </ul>
+    
+    <a data-action="passengers#add">ADD A PASSENGER</a>
+    <%# Template for Adding Passengers%>
+    <template data-passengers-target="template">
+      <%= form.fields_for :passengers, Passenger.new do |passengers_form| %>
+        <li data-passengers-target="passenger">
+          <%= passengers_form.label :name %>
+          <%= passengers_form.text_field :name %>
+
+          <%= passengers_form.label :email %>
+          <%= passengers_form.text_field :email %>
+          <a data-action="passengers#remove">Remove</a>
+        </li>
+      <% end %>
+    </template>
+    <%# End Template %>
+
+  </div>
+
+  <br><br>
+
   <%= form.submit "Book this flight" %>
 <% end %>
