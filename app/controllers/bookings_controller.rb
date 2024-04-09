@@ -15,6 +15,9 @@ class BookingsController < ApplicationController
     @booking = Booking.new(booking_params)
 
     if @booking.save
+      @booking.passengers.each do |passenger|
+        PassengerMailer.confirmation_email(passenger, @booking).deliver_now
+      end
       redirect_to action: 'show', id: @booking.id
     else
       render :new, status: :unprocessable_entity
